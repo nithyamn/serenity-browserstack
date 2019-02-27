@@ -1,62 +1,82 @@
 package com.browserstack;
 
+import java.io.FileReader;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
+import com.browserstack.local.Local;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import net.thucydides.core.util.EnvironmentVariables;
-import net.thucydides.core.util.SystemEnvironmentVariables;
 import net.thucydides.core.webdriver.DriverSource;
 
+@SuppressWarnings("unchecked")
 public class BrowserStackSerenityDriver implements DriverSource {
 
     public WebDriver newDriver() {
-        EnvironmentVariables environmentVariables = SystemEnvironmentVariables.createEnvironmentVariables();
+        String test_config = System.getProperty("test_config");
+        int test_config_environment_index = Integer.parseInt(System.getProperty("test_config_environment_index").split("index_")[1]) - 1;
+
+        JSONParser parser = new JSONParser();
+        JSONObject config;
+        try {
+            config = (JSONObject) parser.parse(new FileReader("src/test/resources/conf/" + test_config));
+        } catch (Exception e) {
+            System.out.println("Error: could not open " + "src/test/resources/conf/" + test_config);
+            e.printStackTrace();
+            return null;
+        }
+        JSONObject allEnvironments = (JSONObject) config.get("environments");
+        String currentEnvironmentName = (String) allEnvironments.keySet().toArray()[test_config_environment_index];
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        Map<String, Object> envCapabilities = (Map<String, Object>) allEnvironments.get(currentEnvironmentName);
+        Iterator<Map.Entry<String, Object>> it = envCapabilities.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> pair = (Map.Entry<String, Object>) it.next();
+            capabilities.setCapability(pair.getKey().toString(), pair.getValue());
+        }
+
+        Map<String, Object> commonCapabilities = (Map<String, Object>) config.get("capabilities");
+        it = commonCapabilities.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> pair = (Map.Entry<String, Object>) it.next();
+            Object envData = capabilities.getCapability(pair.getKey().toString());
+            Object resultData = pair.getValue();
+            if (envData != null && envData.getClass() == JSONObject.class) {
+                resultData = ((JSONObject) resultData).clone(); // do not modify actual common caps
+                ((JSONObject) resultData).putAll((JSONObject) envData);
+            }
+            capabilities.setCapability(pair.getKey().toString(), resultData);
+        }
 
         String username = System.getenv("BROWSERSTACK_USERNAME");
         if (username == null) {
-            username = (String) environmentVariables.getProperty("browserstack.user");
+            username = (String) config.get("user");
         }
 
         String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
         if (accessKey == null) {
-            accessKey = (String) environmentVariables.getProperty("browserstack.key");
+            accessKey = (String) config.get("key");
         }
 
-        String environment = System.getProperty("environment");
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-
-        Iterator it = environmentVariables.getKeys().iterator();
-        while (it.hasNext()) {
-            String key = (String) it.next();
-
-            if (key.equals("browserstack.user") || key.equals("browserstack.key")
-                    || key.equals("browserstack.server")) {
-                continue;
-            } else if (key.startsWith("bstack_")) {
-                capabilities.setCapability(key.replace("bstack_", ""), environmentVariables.getProperty(key));
-                if (key.equals("bstack_browserstack.local")
-                        && environmentVariables.getProperty(key).equalsIgnoreCase("true")) {
-                    System.setProperty("browserstack.local", "true");
-                }
-            } else if (environment != null && key.startsWith("environment." + environment)) {
-                capabilities.setCapability(key.replace("environment." + environment + ".", ""),
-                        environmentVariables.getProperty(key));
-                if (key.equals("environment." + environment + ".browserstack.local")
-                        && environmentVariables.getProperty(key).equalsIgnoreCase("true")) {
-                    System.setProperty("browserstack.local", "true");
-                }
-            }
-        }
+        BrowserStackSerenityTest.checkAndStartBrowserStackLocal(capabilities, accessKey);
 
         try {
-            return new RemoteWebDriver(new URL("http://" + username + ":" + accessKey + "@"
-                    + environmentVariables.getProperty("browserstack.server") + "/wd/hub"), capabilities);
-        } catch (Exception e) {
-            System.out.println(e);
+            return new RemoteWebDriver(
+                    new URL("http://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub"),
+                    capabilities);
+        } catch (MalformedURLException e) {
+            System.out.println(
+                    "Malformed url " + "http://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub");
+            e.printStackTrace();
             return null;
         }
     }

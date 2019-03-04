@@ -71,11 +71,11 @@ public class BrowserStackSerenityDriver implements DriverSource {
 
         try {
             return new RemoteWebDriver(
-                    new URL("http://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub"),
+                    new URL("https://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub"),
                     capabilities);
         } catch (MalformedURLException e) {
             System.out.println(
-                    "Malformed url " + "http://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub");
+                    "Malformed url " + "https://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub");
             e.printStackTrace();
             return null;
         }

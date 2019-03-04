@@ -18,7 +18,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import net.thucydides.core.webdriver.DriverSource;
 
 @SuppressWarnings("unchecked")
-public class BrowserStackSerenityDriver implements DriverSource {
+public class BrowserStackSerenityDriver implements DriverSource{
 
     public WebDriver newDriver() {
         String test_config = System.getProperty("test_config");
@@ -70,20 +70,21 @@ public class BrowserStackSerenityDriver implements DriverSource {
         try {
             BrowserStackSerenityTest.checkAndStartBrowserStackLocal(capabilities, accessKey);
         } catch(Exception e) {
-            System.out.println("Error: could not start browserstack local");
+            System.err.println("Error: could not start browserstack local");
             e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         }
 
+        String urlString = "https://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub";
         try {
             return new RemoteWebDriver(
-                    new URL("https://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub"),
+                    new URL(urlString),
                     capabilities);
         } catch (MalformedURLException e) {
-            System.out.println(
-                    "Malformed url " + "https://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub");
+            System.err.println(
+                    "Malformed url " + urlString);
             e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         }
     }
 

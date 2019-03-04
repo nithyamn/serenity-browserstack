@@ -67,7 +67,13 @@ public class BrowserStackSerenityDriver implements DriverSource {
             accessKey = (String) config.get("key");
         }
 
-        BrowserStackSerenityTest.checkAndStartBrowserStackLocal(capabilities, accessKey);
+        try {
+            BrowserStackSerenityTest.checkAndStartBrowserStackLocal(capabilities, accessKey);
+        } catch(Exception e) {
+            System.out.println("Error: could not start browserstack local");
+            e.printStackTrace();
+            return null;
+        }
 
         try {
             return new RemoteWebDriver(

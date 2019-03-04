@@ -12,7 +12,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class BrowserStackSerenityTest {
     private static Local bsLocal;
 
-    public static void checkAndStartBrowserStackLocal(DesiredCapabilities capabilities, String accessKey) {
+    public static void checkAndStartBrowserStackLocal(DesiredCapabilities capabilities, String accessKey)
+            throws Exception {
         if (bsLocal != null) {
             return;
         }
@@ -22,12 +23,7 @@ public class BrowserStackSerenityTest {
             bsLocal = new Local();
             Map<String, String> options = new HashMap<String, String>();
             options.put("key", accessKey);
-            try {
-                bsLocal.start(options);
-            } catch (Exception e) {
-                System.out.println("Error: could not start browserstack local");
-                e.printStackTrace();
-            }
+            bsLocal.start(options);
         }
     }
 
@@ -35,7 +31,6 @@ public class BrowserStackSerenityTest {
     public static void tearDown() throws Exception {
         if (bsLocal != null) {
             bsLocal.stop();
-            bsLocal = null;
         }
     }
 }

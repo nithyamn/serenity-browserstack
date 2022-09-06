@@ -2,6 +2,7 @@ package com.browserstack;
 
 import com.browserstack.local.Local;
 
+import java.net.URL;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -10,42 +11,23 @@ import org.junit.AfterClass;
 
 import net.thucydides.core.util.EnvironmentVariables;
 import net.thucydides.core.util.SystemEnvironmentVariables;
+import org.openqa.selenium.MutableCapabilities;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class BrowserStackSerenityTest {
-    static Local bsLocal;
+    static WebDriver driver;
 
     @BeforeClass
     public static void setUp() throws Exception {
-        EnvironmentVariables environmentVariables = SystemEnvironmentVariables.createEnvironmentVariables();
-
-        String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
-        if (accessKey == null) {
-            accessKey = (String) environmentVariables.getProperty("browserstack.key");
-        }
-
-        String environment = System.getProperty("environment");
-        String key = "bstack_browserstack.local";
-        boolean is_local = environmentVariables.getProperty(key) != null
-                && environmentVariables.getProperty(key).equals("true");
-
-        if (environment != null && !is_local) {
-            key = "environment." + environment + ".browserstack.local";
-            is_local = environmentVariables.getProperty(key) != null
-                    && environmentVariables.getProperty(key).equals("true");
-        }
-
-        if (is_local) {
-            bsLocal = new Local();
-            Map<String, String> bsLocalArgs = new HashMap<String, String>();
-            bsLocalArgs.put("key", accessKey);
-            bsLocal.start(bsLocalArgs);
-        }
+        MutableCapabilities capabilities = new MutableCapabilities();
+        driver = new RemoteWebDriver(
+                new URL("https://hub.browserstack.com/wd/hub"), capabilities);
     }
 
     @AfterClass
     public static void tearDown() throws Exception {
-        if (bsLocal != null) {
-            bsLocal.stop();
-        }
+        driver.quit();
     }
 }

@@ -11,12 +11,11 @@ Master branch contains **Selenium 3** samples, for **Selenium 4 - W3C protocol**
 ## Setup
 * Clone the repo
 * Install dependencies `mvn install`
-* You can setup environment variables for all sample repos (see Notes) or update `serenity.properties` file with your [BrowserStack Username and Access Key](https://www.browserstack.com/accounts/settings)
+* You can setup environment variables for all sample repos (see Notes) or update `serenity.conf` file with your [BrowserStack Username and Access Key](https://www.browserstack.com/accounts/settings)
 
 ## Running your tests
-- To run a single test, run `mvn verify -P single`
+- To run a sample test, run `mvn verify -P sample`
 - To run local tests, run `mvn verify -P local`
-- To run parallel tests, run `mvn verify -P parallel`
 
  Understand how many parallel sessions you need by using our [Parallel Test Calculator](https://www.browserstack.com/automate/parallel-calculator?ref=github)
 

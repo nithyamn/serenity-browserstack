@@ -3,12 +3,13 @@ package com.browserstack;
 import java.net.URL;
 import java.util.Iterator;
 
+import net.thucydides.core.environment.SystemEnvironmentVariables;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import net.thucydides.core.util.EnvironmentVariables;
-import net.thucydides.core.util.SystemEnvironmentVariables;
+//import net.thucydides.core.util.SystemEnvironmentVariables;
 import net.thucydides.core.webdriver.DriverSource;
 
 public class BrowserStackSerenityDriver implements DriverSource {

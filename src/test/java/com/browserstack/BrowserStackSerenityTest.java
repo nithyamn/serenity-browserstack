@@ -5,11 +5,11 @@ import com.browserstack.local.Local;
 import java.util.Map;
 import java.util.HashMap;
 
+import net.thucydides.core.environment.SystemEnvironmentVariables;
 import org.junit.BeforeClass;
 import org.junit.AfterClass;
 
 import net.thucydides.core.util.EnvironmentVariables;
-import net.thucydides.core.util.SystemEnvironmentVariables;
 
 public class BrowserStackSerenityTest {
     static Local bsLocal;

@@ -1,8 +1,11 @@
 package com.browserstack;
 
+import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Map;
 
 import net.thucydides.core.environment.SystemEnvironmentVariables;
 import org.openqa.selenium.MutableCapabilities;
@@ -11,53 +14,27 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import net.thucydides.core.util.EnvironmentVariables;
 import net.thucydides.core.webdriver.DriverSource;
+import org.yaml.snakeyaml.Yaml;
 
 public class BrowserStackSerenityDriver implements DriverSource {
+    public static String userName, accessKey;
+    public static Map<String, Object> browserStackYamlMap;
+    public static final String USER_DIR = "user.dir";
 
     public WebDriver newDriver() {
         EnvironmentVariables environmentVariables = SystemEnvironmentVariables.createEnvironmentVariables();
+        File file = new File(getUserDir() + "/browserstack.yml");
+        browserStackYamlMap = convertYamlFileToMap(file, new HashMap<>());
+        userName = System.getenv("BROWSERSTACK_USERNAME") != null ? System.getenv("BROWSERSTACK_USERNAME") : (String) browserStackYamlMap.get("userName");
+        accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY") != null ? System.getenv("BROWSERSTACK_ACCESS_KEY") : (String) browserStackYamlMap.get("accessKey");
 
-        String username = System.getenv("BROWSERSTACK_USERNAME");
-        if (username == null) {
-            username = (String) environmentVariables.getProperty("browserstack.user");
-        }
-
-        String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
-        if (accessKey == null) {
-            accessKey = (String) environmentVariables.getProperty("browserstack.key");
-        }
-
-        String environment = System.getProperty("environment");
         MutableCapabilities capabilities = new MutableCapabilities();
         HashMap<String, Object> bStackMap = new HashMap<>();
-
-        Iterator it = environmentVariables.getKeys().iterator();
-        while (it.hasNext()) {
-            String key = (String) it.next();
-
-            if (key.equals("browserstack.user") || key.equals("browserstack.key")
-                    || key.equals("browserstack.server")) {
-                continue;
-            } else if (key.startsWith("bstack_")) {
-                bStackMap.put(key.replace("bstack_", ""), environmentVariables.getProperty(key));
-                if (key.equals("bstack_local")
-                        && environmentVariables.getProperty(key).equalsIgnoreCase("true")) {
-                    bStackMap.put("local", "true");
-                }
-            } else if (environment != null && key.startsWith("environment." + environment)) {
-                bStackMap.put(key.replace("environment." + environment + ".", ""),
-                        environmentVariables.getProperty(key));
-                if (key.equals("environment." + environment + ".local")
-                        && environmentVariables.getProperty(key).equalsIgnoreCase("true")) {
-//                    System.setProperty("browserstack.local", "true");
-                    bStackMap.put("local", true);
-                }
-            }
-        }
+        bStackMap.put("source", "serenity:sample-sdk:v1.0");
         capabilities.setCapability("bstack:options", bStackMap);
         try {
-            return new RemoteWebDriver(new URL("https://" + username + ":" + accessKey + "@"
-                    + environmentVariables.getProperty("browserstack.server") + "/wd/hub"), capabilities);
+            return new RemoteWebDriver(new URL("https://" + userName + ":" + accessKey + "@"
+                    + environmentVariables.getProperty("serverName") + "/wd/hub"), capabilities);
         } catch (Exception e) {
             System.out.println(e);
             return null;
@@ -66,5 +43,21 @@ public class BrowserStackSerenityDriver implements DriverSource {
 
     public boolean takesScreenshots() {
         return true;
+    }
+
+    private String getUserDir() {
+        return System.getProperty(USER_DIR);
+    }
+
+    private Map<String, Object> convertYamlFileToMap(File yamlFile, Map<String, Object> map) {
+        try {
+            InputStream inputStream = Files.newInputStream(yamlFile.toPath());
+            Yaml yaml = new Yaml();
+            Map<String, Object> config = yaml.load(inputStream);
+            map.putAll(config);
+        } catch (Exception e) {
+            throw new RuntimeException(String.format("Malformed browserstack.yml file - %s.", e));
+        }
+        return map;
     }
 }

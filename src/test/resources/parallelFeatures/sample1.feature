@@ -1,4 +1,4 @@
-Feature: BrowserStack Demo
+Feature: BrowserStack Demo 1
 
   Scenario: Add product to cart
     Given I am on the website 'https://www.bstackdemo.com'

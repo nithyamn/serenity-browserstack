@@ -1,15 +1,15 @@
 package com.browserstack;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import net.thucydides.core.environment.SystemEnvironmentVariables;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import net.thucydides.core.util.EnvironmentVariables;
-//import net.thucydides.core.util.SystemEnvironmentVariables;
 import net.thucydides.core.webdriver.DriverSource;
 
 public class BrowserStackSerenityDriver implements DriverSource {
@@ -28,7 +28,8 @@ public class BrowserStackSerenityDriver implements DriverSource {
         }
 
         String environment = System.getProperty("environment");
-        DesiredCapabilities capabilities = new DesiredCapabilities();
+        MutableCapabilities capabilities = new MutableCapabilities();
+        HashMap<String, Object> bStackMap = new HashMap<>();
 
         Iterator it = environmentVariables.getKeys().iterator();
         while (it.hasNext()) {
@@ -38,21 +39,22 @@ public class BrowserStackSerenityDriver implements DriverSource {
                     || key.equals("browserstack.server")) {
                 continue;
             } else if (key.startsWith("bstack_")) {
-                capabilities.setCapability(key.replace("bstack_", ""), environmentVariables.getProperty(key));
-                if (key.equals("bstack_browserstack.local")
+                bStackMap.put(key.replace("bstack_", ""), environmentVariables.getProperty(key));
+                if (key.equals("bstack_local")
                         && environmentVariables.getProperty(key).equalsIgnoreCase("true")) {
-                    System.setProperty("browserstack.local", "true");
+                    bStackMap.put("local", "true");
                 }
             } else if (environment != null && key.startsWith("environment." + environment)) {
-                capabilities.setCapability(key.replace("environment." + environment + ".", ""),
+                bStackMap.put(key.replace("environment." + environment + ".", ""),
                         environmentVariables.getProperty(key));
-                if (key.equals("environment." + environment + ".browserstack.local")
+                if (key.equals("environment." + environment + ".local")
                         && environmentVariables.getProperty(key).equalsIgnoreCase("true")) {
-                    System.setProperty("browserstack.local", "true");
+//                    System.setProperty("browserstack.local", "true");
+                    bStackMap.put("local", true);
                 }
             }
         }
-
+        capabilities.setCapability("bstack:options", bStackMap);
         try {
             return new RemoteWebDriver(new URL("https://" + username + ":" + accessKey + "@"
                     + environmentVariables.getProperty("browserstack.server") + "/wd/hub"), capabilities);

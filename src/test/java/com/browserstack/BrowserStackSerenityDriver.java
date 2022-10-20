@@ -19,12 +19,12 @@ public class BrowserStackSerenityDriver implements DriverSource {
 
         String username = System.getenv("BROWSERSTACK_USERNAME");
         if (username == null) {
-            username = (String) environmentVariables.getProperty("browserstack.user");
+            username = environmentVariables.getProperty("browserstack.user");
         }
 
         String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
         if (accessKey == null) {
-            accessKey = (String) environmentVariables.getProperty("browserstack.key");
+            accessKey = environmentVariables.getProperty("browserstack.key");
         }
 
         String environment = System.getProperty("environment");
@@ -49,17 +49,17 @@ public class BrowserStackSerenityDriver implements DriverSource {
                         environmentVariables.getProperty(key));
                 if (key.equals("environment." + environment + ".local")
                         && environmentVariables.getProperty(key).equalsIgnoreCase("true")) {
-//                    System.setProperty("browserstack.local", "true");
                     bStackMap.put("local", true);
                 }
             }
         }
+        bStackMap.put("source", "serenity:sample-master:v1.0");
         capabilities.setCapability("bstack:options", bStackMap);
         try {
             return new RemoteWebDriver(new URL("https://" + username + ":" + accessKey + "@"
                     + environmentVariables.getProperty("browserstack.server") + "/wd/hub"), capabilities);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             return null;
         }
     }

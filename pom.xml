@@ -175,7 +175,6 @@
                             <reuseForks>true</reuseForks>
                             <systemPropertyVariables>
                                 <environment>single</environment>
-                                <taskID>MY_TEST_SCHEMA_${surefire.forkNumber}</taskID>
                             </systemPropertyVariables>
                         </configuration>
                         <executions>

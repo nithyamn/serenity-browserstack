@@ -20,6 +20,8 @@ buildName: browserstack-build-1
 # Use `projectName` to set the name of your project. Example, Marketing Website
 projectName: BrowserStack Samples
 
+framework: serenity
+
 # =======================================
 # Platforms (Browsers / Devices to test)
 # =======================================

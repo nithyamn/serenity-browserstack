@@ -36,7 +36,7 @@ This repository uses the BrowserStack SDK to run tests on BrowserStack. Follow t
 For example if you are using 
 ```
 @RunWith(CucumberWithSerenity.class)
-@CucumberOptions(features = "src/test/resources/features/singlee.feature")
+@CucumberOptions(features = "src/test/resources/features/single.feature")
 ```
 Replace the above code and use the Junit5 code as shown below.
 ```
@@ -115,7 +115,7 @@ Replace the above code and use the Junit5 code as shown below.
             </plugin>
 ```
 * Install dependencies `mvn compile`
-* Run your test using mvn verify -P <your-profile-name>
+* Run your test using mvn verify -P `your-profile-name`
 
 ## Notes
 * You can view your test results on the [BrowserStack Automate dashboard](https://www.browserstack.com/automate)

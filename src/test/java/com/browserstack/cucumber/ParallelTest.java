@@ -10,6 +10,6 @@ import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
 @Suite
 @IncludeEngines("cucumber")
 @SelectClasspathResource("parallelFeatures")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.browserstack.cucumber.steps")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.browserstack.cucumber")
 public class ParallelTest {
 }

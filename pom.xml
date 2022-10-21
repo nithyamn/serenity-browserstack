@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.browserstack</groupId>
@@ -16,12 +15,16 @@
         <java.source.version>${java.version}</java.source.version>
         <java.target.version>${java.version}</java.target.version>
         <maven.version>3.5.3</maven.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <serenity.version>3.2.5</serenity.version>
-        <snakeyml.version>1.30</snakeyml.version>
+        <serenity.version>3.3.4</serenity.version>
+        <serenity.maven.version>3.3.4</serenity.maven.version>
+        <serenity.cucumber.version>3.3.4</serenity.cucumber.version>
+        <browserstack.local.version>1.0.6</browserstack.local.version>
+
+        <maven.failsafe-plugin.version>3.0.0-M5</maven.failsafe-plugin.version>
         <maven.surefire-plugin.version>3.0.0-M5</maven.surefire-plugin.version>
         <maven.compiler-plugin.version>3.8.1</maven.compiler-plugin.version>
 
@@ -71,27 +74,33 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>net.serenity-bdd</groupId>
             <artifactId>serenity-ensure</artifactId>
             <version>${serenity.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>LATEST</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-launcher</artifactId>
-            <version>1.8.1</version>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>LATEST</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <version>5.8.2</version>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -113,6 +122,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>getClasspathFilenames</id>
@@ -124,23 +134,39 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire-plugin.version}</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe-plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <include>com/browserstack/cucumber/SingleTest.java</include>
+                    </includes>
+                    <argLine>
+                        -javaagent:${com.browserstack:browserstack-java-sdk:jar}
+                    </argLine>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler-plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire-plugin.version}</version>
-                <configuration>
-                    <includes>
-                        <include>com/browserstack/cucumber/SingleTest.java</include>
-                    </includes>
-                    <reuseForks>true</reuseForks>
-                    <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
             <plugin>
@@ -169,13 +195,13 @@
 
     <profiles>
         <profile>
-            <id>sample</id>
+            <id>single</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${maven.surefire-plugin.version}</version>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven.failsafe-plugin.version}</version>
                         <configuration>
                             <includes>
                                 <include>com/browserstack/cucumber/SingleTest.java</include>
@@ -183,8 +209,6 @@
                             <argLine>
                                 -javaagent:${com.browserstack:browserstack-java-sdk:jar}
                             </argLine>
-                            <reuseForks>true</reuseForks>
-                            <testFailureIgnore>true</testFailureIgnore>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -197,17 +221,41 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${maven.surefire-plugin.version}</version>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven.failsafe-plugin.version}</version>
                         <configuration>
                             <includes>
                                 <include>com/browserstack/cucumber/LocalTest.java</include>
                             </includes>
-                            <reuseForks>true</reuseForks>
                             <argLine>
                                 -javaagent:${com.browserstack:browserstack-java-sdk:jar}
                             </argLine>
-                            <testFailureIgnore>true</testFailureIgnore>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>parallel</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven.failsafe-plugin.version}</version>
+                        <configuration>
+                            <includes>
+                                <include>com/browserstack/cucumber/ParallelTest.java</include>
+                            </includes>
+                            <properties>
+                                <configurationParameters>cucumber.execution.parallel.enabled = true
+                                    cucumber.execution.parallel.config.strategy = fixed
+                                    cucumber.execution.parallel.config.fixed.parallelism = 5</configurationParameters>
+                            </properties>
+                            <argLine>
+                                -javaagent:${com.browserstack:browserstack-java-sdk:jar}
+                            </argLine>
                         </configuration>
                     </plugin>
                 </plugins>

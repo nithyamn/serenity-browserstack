@@ -21,6 +21,7 @@ public class BrowserStackSerenityDriver implements DriverSource {
     public static Map<String, Object> browserStackYamlMap;
     public static final String USER_DIR = "user.dir";
 
+    @Override
     public WebDriver newDriver() {
         EnvironmentVariables environmentVariables = SystemEnvironmentVariables.createEnvironmentVariables();
         File file = new File(getUserDir() + "/browserstack.yml");
@@ -36,11 +37,12 @@ public class BrowserStackSerenityDriver implements DriverSource {
             return new RemoteWebDriver(new URL("https://" + userName + ":" + accessKey + "@"
                     + environmentVariables.getProperty("serverName") + "/wd/hub"), capabilities);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             return null;
         }
     }
 
+    @Override
     public boolean takesScreenshots() {
         return true;
     }

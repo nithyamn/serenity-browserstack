@@ -1,5 +1,6 @@
 package com.browserstack.cucumber.pages;
 
+import io.cucumber.java.After;
 import org.openqa.selenium.support.FindBy;
 
 import net.serenitybdd.core.pages.WebElementFacade;
@@ -50,5 +51,12 @@ public class BStackDemoPage extends PageObject {
 
     public String getProductCartText() {
         return productCartText.getText();
+    }
+
+    @After
+    public void teardown(){
+        if(getDriver() != null){
+            getDriver().quit();
+        }
     }
 }

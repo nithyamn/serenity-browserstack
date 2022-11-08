@@ -13,9 +13,9 @@
 * Install dependencies `mvn install`
 
 ### Running your tests
-- To run a single test, run `mvn verify -P single`
-- To run local tests, run `mvn verify -P local`
-- To run parallel tests, run `mvn verify -P parallel`
+- To run a sample test, run `mvn verify -P sample-test`
+- To run local tests, run `mvn verify -P sample-local-test`
+- To run parallel tests, run `mvn verify -P sample-parallel-test`
 
  Understand how many parallel sessions you need by using our [Parallel Test Calculator](https://www.browserstack.com/automate/parallel-calculator?ref=github)
 
@@ -36,7 +36,7 @@ This repository uses the BrowserStack SDK to run tests on BrowserStack. Follow t
 For example if you are using 
 ```
 @RunWith(CucumberWithSerenity.class)
-@CucumberOptions(features = "src/test/resources/features/single.feature")
+@CucumberOptions(features = "src/test/resources/features/sample.feature")
 ```
 Replace the above code and use the Junit5 code as shown below.
 ```

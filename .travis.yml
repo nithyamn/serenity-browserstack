@@ -11,4 +11,4 @@ before_install:
 after_failure: cat /home/travis/build/browserstack/browserstack-local-java/target/surefire-reports/*
 
 scripts:
-  - mvn verify -P single && mvn verify -P local && mvn verify -P parallel
+  - mvn verify -P sample-test && mvn verify -P sample-local-test && mvn verify -P sample-parallel-test

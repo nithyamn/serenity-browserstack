@@ -9,7 +9,7 @@ import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
 
 @Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("singleFeature")
+@SelectClasspathResource("sampleFeature")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.browserstack.cucumber")
-public class SingleTest {
+public class SampleTest {
 }

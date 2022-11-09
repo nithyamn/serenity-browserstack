@@ -9,6 +9,6 @@ public class LocalCheckSteps {
     @Then("^I should see \"([^\"]*)\"$")
     public void matchTitle(String matchTitle) throws Throwable {
         localPage.open();
-        localPage.bodyShouldMatch(matchTitle);
+        localPage.titleShouldMatch(matchTitle);
     }
 }

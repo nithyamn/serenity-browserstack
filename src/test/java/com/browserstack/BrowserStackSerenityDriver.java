@@ -10,6 +10,7 @@ import java.util.Map;
 import net.thucydides.core.environment.SystemEnvironmentVariables;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.MutableCapabilities;
 import net.thucydides.core.util.EnvironmentVariables;
 import net.thucydides.core.webdriver.DriverSource;
 import org.yaml.snakeyaml.Yaml;

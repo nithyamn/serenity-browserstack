@@ -20,12 +20,12 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <serenity.version>3.3.4</serenity.version>
-        <serenity.maven.version>3.3.4</serenity.maven.version>
-        <serenity.cucumber.version>3.3.4</serenity.cucumber.version>
+        <serenity.version>3.2.1</serenity.version>
+        <serenity.maven.version>3.2.1</serenity.maven.version>
+        <serenity.cucumber.version>3.2.1</serenity.cucumber.version>
         <browserstack.local.version>1.0.3</browserstack.local.version>
 
-        <maven.failsafe-plugin.version>2.22.0</maven.failsafe-plugin.version>
+        <maven.failsafe-plugin.version>3.0.0-M5</maven.failsafe-plugin.version>
         <maven.surefire-plugin.version>3.0.0-M5</maven.surefire-plugin.version>
         <maven.compiler-plugin.version>3.8.1</maven.compiler-plugin.version>
 
@@ -75,34 +75,33 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <version>7.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>net.serenity-bdd</groupId>
             <artifactId>serenity-ensure</artifactId>
             <version>${serenity.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit-platform-engine</artifactId>
-            <version>LATEST</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite</artifactId>
-            <version>LATEST</version>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.8.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.9.1</version>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.8.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>5.8.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.10</version>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
@@ -135,6 +134,24 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe-plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <include>com/browserstack/cucumber/SingleTest.java</include>
+                    </includes>
+                    <reuseForks>true</reuseForks>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>net.serenity-bdd.maven.plugins</groupId>
@@ -175,16 +192,9 @@
                             <reuseForks>true</reuseForks>
                             <systemPropertyVariables>
                                 <environment>single</environment>
+                                <taskID>MY_TEST_SCHEMA_${surefire.forkNumber}</taskID>
                             </systemPropertyVariables>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -206,14 +216,6 @@
                                 <environment>local</environment>
                             </systemPropertyVariables>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -224,65 +226,20 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <version>${maven.failsafe-plugin.version}</version>
                         <configuration>
-                            <properties>
-                                <configurationParameters>
-                                    cucumber.execution.parallel.enabled = true
-                                    cucumber.execution.parallel.config.strategy = fixed
-                                    cucumber.execution.parallel.config.fixed.parallelism = 5
-                                </configurationParameters>
-                            </properties>
+                            <includes>
+                                <include>com/browserstack/cucumber/Parallel*.java</include>
+                            </includes>
+                            <parallel>classes</parallel>
+                            <threadCount>4</threadCount>
+                            <forkCount>4</forkCount>
+                            <reuseForks>true</reuseForks>
+                            <systemPropertyVariables>
+                                <environment>parallel_${surefire.forkNumber}</environment>
+                            </systemPropertyVariables>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <id>chrome-test</id>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                                <configuration>
-                                    <includes>
-                                        <include>com/browserstack/cucumber/ParallelTest.java</include>
-                                    </includes>
-                                    <systemPropertyVariables>
-                                        <environment>parallel_1</environment>
-                                    </systemPropertyVariables>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>firefox-test</id>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                                <configuration>
-                                    <includes>
-                                        <include>com/browserstack/cucumber/ParallelTest.java</include>
-                                    </includes>
-                                    <systemPropertyVariables>
-                                        <environment>parallel_2</environment>
-                                    </systemPropertyVariables>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>safari-test</id>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                                <configuration>
-                                    <includes>
-                                        <include>com/browserstack/cucumber/ParallelTest.java</include>
-                                    </includes>
-                                    <systemPropertyVariables>
-                                        <environment>parallel_3</environment>
-                                    </systemPropertyVariables>
-                                </configuration>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>

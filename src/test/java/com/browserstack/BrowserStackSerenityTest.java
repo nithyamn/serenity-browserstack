@@ -1,33 +1,35 @@
-package com.browserstack.cucumber;
+package com.browserstack;
 
 import com.browserstack.local.Local;
-import io.cucumber.java.AfterAll;
-import io.cucumber.java.BeforeAll;
-import net.thucydides.core.environment.SystemEnvironmentVariables;
-import net.thucydides.core.util.EnvironmentVariables;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
 
-public class StartLocalStep {
-    private static Local bsLocal;
+import org.junit.BeforeClass;
+import org.junit.AfterClass;
 
-    @BeforeAll
+import net.thucydides.core.util.EnvironmentVariables;
+import net.thucydides.core.util.SystemEnvironmentVariables;
+
+public class BrowserStackSerenityTest {
+    static Local bsLocal;
+
+    @BeforeClass
     public static void setUp() throws Exception {
         EnvironmentVariables environmentVariables = SystemEnvironmentVariables.createEnvironmentVariables();
 
         String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
         if (accessKey == null) {
-            accessKey = environmentVariables.getProperty("browserstack.key");
+            accessKey = (String) environmentVariables.getProperty("browserstack.key");
         }
 
         String environment = System.getProperty("environment");
-        String key = "bstack_local";
+        String key = "bstack_browserstack.local";
         boolean is_local = environmentVariables.getProperty(key) != null
                 && environmentVariables.getProperty(key).equals("true");
 
         if (environment != null && !is_local) {
-            key = "environment." + environment + ".local";
+            key = "environment." + environment + ".browserstack.local";
             is_local = environmentVariables.getProperty(key) != null
                     && environmentVariables.getProperty(key).equals("true");
         }
@@ -40,7 +42,7 @@ public class StartLocalStep {
         }
     }
 
-    @AfterAll
+    @AfterClass
     public static void tearDown() throws Exception {
         if (bsLocal != null) {
             bsLocal.stop();

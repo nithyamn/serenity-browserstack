@@ -7,5 +7,5 @@ import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(features = "src/test/resources/features/single.feature")
-public class SingleTest extends BrowserStackSerenityTest {
+public class ParallelChromeTest extends BrowserStackSerenityTest {
 }

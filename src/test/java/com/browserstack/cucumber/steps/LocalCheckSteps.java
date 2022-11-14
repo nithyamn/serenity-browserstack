@@ -1,6 +1,8 @@
 package com.browserstack.cucumber.steps;
+
 import io.cucumber.java.en.Then;
 import com.browserstack.cucumber.pages.LocalPage;
+
 public class LocalCheckSteps {
     LocalPage localPage;
 

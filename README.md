@@ -1,6 +1,6 @@
 # serenity-browserstack
 
-[Serenity](http://www.thucydides.info/docs/serenity/) Integration with BrowserStack SDK.
+[Serenity](https://serenity-bdd.info/) Integration with BrowserStack SDK.
 
 ![BrowserStack Logo](https://d98b8t1nnulk5.cloudfront.net/production/images/layout/logo-header.png?1469004780)
 

@@ -11,11 +11,11 @@
 * Clone the repo
 * Replace YOUR_USERNAME and YOUR_ACCESS_KEY with your BrowserStack access credentials in browserstack.yml.
 * Install dependencies `mvn install`
+* You can setup environment variables for all sample repos (see Notes) or update `serenity.conf` file with your [BrowserStack Username and Access Key](https://www.browserstack.com/accounts/settings)
 
 ### Running your tests
 - To run a sample test, run `mvn verify -P sample-test`
 - To run local tests, run `mvn verify -P sample-local-test`
-- To run parallel tests, run `mvn verify -P sample-parallel-test`
 
  Understand how many parallel sessions you need by using our [Parallel Test Calculator](https://www.browserstack.com/automate/parallel-calculator?ref=github)
 

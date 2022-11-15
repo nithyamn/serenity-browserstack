@@ -1,7 +1,7 @@
 # =============================
 # Set BrowserStack Credentials
 # =============================
-# Add your BrowserStack userName and accessKey here or set BROWSERSTACK_USERNAME and
+# Add your BrowserStack userName and acccessKey here or set BROWSERSTACK_USERNAME and
 # BROWSERSTACK_ACCESS_KEY as env variables
 userName: YOUR_USERNAME
 accessKey: YOUR_ACCESS_KEY
@@ -19,7 +19,7 @@ accessKey: YOUR_ACCESS_KEY
 buildName: browserstack-build-1
 # Use `projectName` to set the name of your project. Example, Marketing Website
 projectName: BrowserStack Samples
-
+# Use `framework` to set the framework of your project. Example, testng, cucumber, cucumber-testng
 framework: serenity
 
 # =======================================
@@ -30,11 +30,11 @@ framework: serenity
 platforms:
   - os: OS X
     osVersion: Big Sur
-    browser: Chrome
+    browserName: Chrome
     browserVersion: latest
   - os: Windows
     osVersion: 10
-    browser: Edge
+    browserName: Edge
     browserVersion: latest
   - device: Samsung Galaxy S22 Ultra
     browserName: chrome # Try 'samsung' for Samsung browser
@@ -58,10 +58,10 @@ parallelsPerPlatform: 1
 # Set browserStackLocal to true if your website under test is not accessible publicly over the internet
 # Learn more about how BrowserStack Local works here -> https://www.browserstack.com/docs/automate/selenium/local-testing-introduction
 browserstackLocal: true # <boolean> (Default false)
-#browserStackLocalOptions:
-#Options to be passed to BrowserStack local in-case of advanced configurations
-#  localIdentifier: # <string> (Default: null) Needed if you need to run multiple instances of local.
-#  forceLocal: true  # <boolean> (Default: false) Set to true if you need to resolve all your traffic via BrowserStack Local tunnel.
+# Options to be passed to BrowserStack local in-case of advanced configurations
+# browserStackLocalOptions:
+#   localIdentifier: # <string> (Default: null) Needed if you need to run multiple instances of local.
+#   forceLocal: true  # <boolean> (Default: false) Set to true if you need to resolve all your traffic via BrowserStack Local tunnel.
 # Entire list of arguments available here -> https://www.browserstack.com/docs/automate/selenium/manage-incoming-connections
 
 # ===================

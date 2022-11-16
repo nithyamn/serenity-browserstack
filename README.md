@@ -51,7 +51,7 @@ This repository uses the BrowserStack SDK to run tests on BrowserStack. Follow t
                 <version>${maven.failsafe-plugin.version}</version>
                 <configuration>
                     <includes>
-                        <include>com/browserstack/cucumber/SampleTest.java</include>
+                        <include>your_test_filename.java</include>
                     </includes>
                     <reuseForks>true</reuseForks>
                     <argLine>

@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.pages.PageObject;
 
-@DefaultUrl("http://bs-local.com:45691/check")
+@DefaultUrl("http://bs-local.com:45454/")
 public class LocalPage extends PageObject {
     private WebDriver driverInstance;
 
@@ -16,7 +16,7 @@ public class LocalPage extends PageObject {
         driverInstance = driver;
     }
 
-    public void bodyShouldMatch(String matchTitle) {
-        assertThat(driverInstance.getPageSource()).containsIgnoringCase(matchTitle);
+    public void titleShouldMatch(String matchTitle) {
+        assertThat(driverInstance.getTitle()).containsIgnoringCase(matchTitle);
     }
 }

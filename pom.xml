@@ -114,6 +114,16 @@
             <artifactId>browserstack-local-java</artifactId>
             <version>${browserstack.local.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.1.4</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -143,6 +153,10 @@
                         <include>com/browserstack/cucumber/SingleTest.java</include>
                     </includes>
                     <reuseForks>true</reuseForks>
+                    <systemPropertyVariables>
+                        <test_config>single.conf.json</test_config>
+                        <test_config_environment_index>index_1</test_config_environment_index>
+                    </systemPropertyVariables>
                 </configuration>
                 <executions>
                     <execution>
@@ -191,8 +205,8 @@
                             </includes>
                             <reuseForks>true</reuseForks>
                             <systemPropertyVariables>
-                                <environment>single</environment>
-                                <taskID>MY_TEST_SCHEMA_${surefire.forkNumber}</taskID>
+                                <test_config>single.conf.json</test_config>
+                                <test_config_environment_index>index_1</test_config_environment_index>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
@@ -213,7 +227,8 @@
                             </includes>
                             <reuseForks>true</reuseForks>
                             <systemPropertyVariables>
-                                <environment>local</environment>
+                                <test_config>local.conf.json</test_config>
+                                <test_config_environment_index>index_1</test_config_environment_index>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
@@ -237,7 +252,8 @@
                             <forkCount>4</forkCount>
                             <reuseForks>true</reuseForks>
                             <systemPropertyVariables>
-                                <environment>parallel_${surefire.forkNumber}</environment>
+                                <test_config>parallel.conf.json</test_config>
+                                <test_config_environment_index>index_${surefire.forkNumber}</test_config_environment_index>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>

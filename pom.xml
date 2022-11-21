@@ -248,8 +248,8 @@
                                 <include>com/browserstack/cucumber/Parallel*.java</include>
                             </includes>
                             <parallel>classes</parallel>
-                            <threadCount>4</threadCount>
-                            <forkCount>4</forkCount>
+                            <threadCount>3</threadCount>
+                            <forkCount>3</forkCount>
                             <reuseForks>true</reuseForks>
                             <systemPropertyVariables>
                                 <test_config>parallel.conf.json</test_config>

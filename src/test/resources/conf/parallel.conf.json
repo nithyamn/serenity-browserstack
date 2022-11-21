@@ -1,5 +1,5 @@
 {
-  "server": "hub-cloud.browserstack.com",
+  "server": "hub.browserstack.com",
   "user": "BROWSERSTACK_USERNAME",
   "key": "BROWSERSTACK_ACCESS_KEY",
   "capabilities": {
@@ -22,13 +22,6 @@
       "bstack:options": {
         "os": "OS X",
         "osVersion": "High Sierra"
-      }
-    },
-    "ie": {
-      "browserName": "Internet Explorer",
-      "browserVersion": "10",
-      "bstack:options": {
-        "os": "Windows"
       }
     }
   }

@@ -13,11 +13,4 @@ public class LocalPage extends PageObject {
     
     public LocalPage() {
     }
-
-    @After
-    public void teardown(){
-        if(getDriver() != null){
-            getDriver().quit();
-        }
-    }
 }

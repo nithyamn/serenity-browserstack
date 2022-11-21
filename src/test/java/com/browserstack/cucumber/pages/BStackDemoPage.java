@@ -52,11 +52,4 @@ public class BStackDemoPage extends PageObject {
     public String getProductCartText() {
         return productCartText.getText();
     }
-
-    @After
-    public void teardown(){
-        if(getDriver() != null){
-            getDriver().quit();
-        }
-    }
 }

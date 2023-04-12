@@ -1,8 +1,6 @@
 package com.browserstack.cucumber.pages;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.openqa.selenium.Keys;
+import io.cucumber.java.After;
 import org.openqa.selenium.support.FindBy;
 
 import net.serenitybdd.core.pages.WebElementFacade;

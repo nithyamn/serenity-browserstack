@@ -1,0 +1,27 @@
+16:08:55.763 [main] INFO  c.browserstack.BrowserStackJavaAgent - Selenium version detected - 4.5.3
+16:08:55.764 [main] INFO  c.browserstack.BrowserStackJavaAgent - Appium version detected - 8.3.0
+16:08:55.764 [main] INFO  c.browserstack.BrowserStackJavaAgent - Selenium version detected - 4.5.3
+16:08:55.765 [main] INFO  c.browserstack.BrowserStackJavaAgent - Appium version detected - 8.3.0
+16:08:55.763 [main] INFO  c.browserstack.BrowserStackJavaAgent - Selenium version detected - 4.5.3
+16:08:55.765 [main] INFO  c.browserstack.BrowserStackJavaAgent - Appium version detected - 8.3.0
+16:08:55.864 [main] INFO  c.browserstack.utils.UtilityMethods - BrowserStack Yml Detected : /Users/nithyamani/Desktop/Serenity/serenity-browserstack-java17/browserstack.yml
+16:08:55.865 [main] INFO  c.browserstack.utils.UtilityMethods - BrowserStack Yml Detected : /Users/nithyamani/Desktop/Serenity/serenity-browserstack-java17/browserstack.yml
+16:08:55.874 [main] INFO  c.browserstack.utils.UtilityMethods - BrowserStack Yml Detected : /Users/nithyamani/Desktop/Serenity/serenity-browserstack-java17/browserstack.yml
+16:08:55.899 [main] INFO  c.b.config.BrowserStackConfig - Setting value of browserstackAutomation as specified in your browserstack.yml to false
+16:08:55.900 [main] INFO  c.b.config.BrowserStackConfig - Setting value of testObservability as specified in your browserstack.yml to true
+16:08:55.901 [main] INFO  c.b.config.BrowserStackConfig - Setting value of browserstackAutomation as specified in your browserstack.yml to false
+16:08:55.901 [main] ERROR c.b.config.BrowserStackConfig - Error in creating buildIdentifier: - Unexpected token COMMA(,) at position 39.
+16:08:55.901 [main] INFO  c.b.config.BrowserStackConfig - Setting value of testObservability as specified in your browserstack.yml to true
+16:08:55.902 [main] ERROR c.b.config.BrowserStackConfig - Error in creating buildIdentifier: - Unexpected token COMMA(,) at position 39.
+16:08:55.906 [main] INFO  c.b.config.BrowserStackConfig - Setting value of browserstackAutomation as specified in your browserstack.yml to false
+16:08:55.906 [main] INFO  c.b.config.BrowserStackConfig - Setting value of testObservability as specified in your browserstack.yml to true
+16:08:55.907 [main] ERROR c.b.config.BrowserStackConfig - Error in creating buildIdentifier: - Unexpected token COMMA(,) at position 39.
+16:08:58.276 [main] ERROR c.b.DriverServiceTransformer - [source error] no such class: net.thucydides.core.model.TestOutcome
+16:08:58.278 [main] ERROR c.b.DriverServiceTransformer - [source error] no such class: net.thucydides.core.model.TestOutcome
+16:08:59.013 [main] ERROR c.b.DriverServiceTransformer - [source error] no such class: net.thucydides.core.model.TestOutcome
+16:09:21.361 [Thread-0] INFO  c.browserstack.utils.LogReportingAPI - Visit https://observability.browserstack.com/builds/iwkmgvhob1xuqoxxkj7zv1qso99njax6pdoublxp to view build report, insights, and many more debugging information all at one place!
+
+16:09:31.417 [Thread-0] INFO  c.browserstack.utils.LogReportingAPI - Visit https://observability.browserstack.com/builds/rdn54s8ozw2z9eqpzalcf33yjh719epwvfotka6n to view build report, insights, and many more debugging information all at one place!
+
+16:09:39.073 [Thread-0] INFO  c.browserstack.utils.LogReportingAPI - Visit https://observability.browserstack.com/builds/amiwghlk9tpjc9fjpl5bljhhuixgkioy6pww8ean to view build report, insights, and many more debugging information all at one place!
+

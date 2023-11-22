@@ -2,10 +2,11 @@ package com.browserstack.cucumber.pages;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import net.serenitybdd.annotations.DefaultUrl;
 import org.openqa.selenium.support.FindBy;
 
 import net.serenitybdd.core.pages.WebElementFacade;
-import net.thucydides.core.annotations.DefaultUrl;
+//import net.thucydidesydides.core.annotations.DefaultUrl;
 import net.thucydides.core.pages.PageObject;
 
 @DefaultUrl("https://www.google.com/ncr")

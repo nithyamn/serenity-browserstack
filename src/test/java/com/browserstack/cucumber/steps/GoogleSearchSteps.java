@@ -1,12 +1,14 @@
 package com.browserstack.cucumber.steps;
 
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import net.thucydides.core.annotations.Steps;
+//import cucumber.api.java.en.Given;
+//import cucumber.api.java.en.Then;
+//import cucumber.api.java.en.When;
+//import net.thucydides.core.annotations.Steps;
 
 import java.text.ParseException;
 import com.browserstack.cucumber.pages.GooglePage;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class GoogleSearchSteps {
     GooglePage googlePage;

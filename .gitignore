@@ -4,3 +4,4 @@ pom.xml
 *.class
 *.swp
 local.log
+/logs

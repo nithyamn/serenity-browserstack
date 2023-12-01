@@ -96,6 +96,11 @@
             <version>4.5.3</version>
         </dependency>
         <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>8.6.0</version>
+        </dependency>
+        <dependency>
 
             <groupId>net.serenity-bdd</groupId>
 
@@ -106,6 +111,7 @@
             <scope>test</scope>
 
         </dependency>
+
 
         <dependency>
 
@@ -427,11 +433,11 @@
 
     </build>
 
+
     <profiles>
-
         <profile>
 
-            <id>single</id>
+            <id>sample</id>
 
             <build>
 
@@ -447,112 +453,12 @@
 
                             <includes>
 
-                                <include>com/browserstack/cucumber/SingleTest.java</include>
+                                <include>com/browserstack/cucumber/AppRunner.java</include>
 
                             </includes>
                             <argLine>-javaagent:"${com.browserstack:browserstack-java-sdk:jar}"</argLine>
 
                             <reuseForks>true</reuseForks>
-
-                            <systemPropertyVariables>
-
-                                <test_config>single.conf.json</test_config>
-
-                                <test_config_environment_index>index_1</test_config_environment_index>
-
-                            </systemPropertyVariables>
-
-                        </configuration>
-
-                    </plugin>
-
-                </plugins>
-
-            </build>
-
-        </profile>
-
-        <profile>
-
-            <id>local</id>
-
-            <build>
-
-                <plugins>
-
-                    <plugin>
-
-                        <artifactId>maven-failsafe-plugin</artifactId>
-
-                        <version>${maven.failsafe-plugin.version}</version>
-
-                        <configuration>
-
-                            <includes>
-
-                                <include>com/browserstack/cucumber/LocalTest.java</include>
-
-                            </includes>
-                            <argLine>-javaagent:"${com.browserstack:browserstack-java-sdk:jar}"</argLine>
-
-                            <reuseForks>true</reuseForks>
-
-                            <systemPropertyVariables>
-
-                                <test_config>local.conf.json</test_config>
-
-                                <test_config_environment_index>index_1</test_config_environment_index>
-
-                            </systemPropertyVariables>
-
-                        </configuration>
-
-                    </plugin>
-
-                </plugins>
-
-            </build>
-
-        </profile>
-
-        <profile>
-
-            <id>parallel</id>
-
-            <build>
-
-                <plugins>
-
-                    <plugin>
-
-                        <artifactId>maven-failsafe-plugin</artifactId>
-
-                        <version>${maven.failsafe-plugin.version}</version>
-
-                        <configuration>
-
-                            <includes>
-
-                                <include>com/browserstack/cucumber/Parallel*.java</include>
-
-                            </includes>
-                            <argLine>-javaagent:"${com.browserstack:browserstack-java-sdk:jar}"</argLine>
-
-                            <parallel>classes</parallel>
-
-                            <threadCount>3</threadCount>
-
-                            <forkCount>3</forkCount>
-
-                            <reuseForks>true</reuseForks>
-
-                            <systemPropertyVariables>
-
-                                <test_config>parallel.conf.json</test_config>
-
-                                <test_config_environment_index>index_${surefire.forkNumber}</test_config_environment_index>
-
-                            </systemPropertyVariables>
 
                         </configuration>
 

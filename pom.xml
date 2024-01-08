@@ -112,7 +112,9 @@
         <dependency>
             <groupId>com.browserstack</groupId>
             <artifactId>browserstack-java-sdk</artifactId>
-            <version>LATEST</version>
+            <version>1.11.2</version>
+            <scope>system</scope>
+            <systemPath>/Users/kamalpreet/Documents/browserstack/browserstack-javaagent/target/browserstack-java-sdk-1.12.7.jar</systemPath>
         </dependency>
     </dependencies>
 
@@ -142,13 +144,6 @@
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven.failsafe-plugin.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-junit47</artifactId>
-                        <version>${maven.failsafe-plugin.version}</version>
-                    </dependency>
-                </dependencies>
                 <configuration>
                     <includes>
                         <include>com/browserstack/cucumber/SampleTest.java</include>

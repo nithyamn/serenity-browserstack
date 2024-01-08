@@ -113,7 +113,6 @@
             <groupId>com.browserstack</groupId>
             <artifactId>browserstack-java-sdk</artifactId>
             <version>LATEST</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

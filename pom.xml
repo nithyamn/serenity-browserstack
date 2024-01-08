@@ -32,14 +32,14 @@
         <repository>
             <id>serenity</id>
             <name>bintray</name>
-            <url>http://dl.bintray.com/serenity/maven</url>
+            <url>https://dl.bintray.com/serenity/maven</url>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>serenity</id>
             <name>bintray-plugins</name>
-            <url>http://dl.bintray.com/serenity/maven</url>
+            <url>https://dl.bintray.com/serenity/maven</url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -112,9 +112,8 @@
         <dependency>
             <groupId>com.browserstack</groupId>
             <artifactId>browserstack-java-sdk</artifactId>
-            <version>1.11.2</version>
-            <scope>system</scope>
-            <systemPath>/Users/kamalpreet/Documents/browserstack/browserstack-javaagent/target/browserstack-java-sdk-1.12.7.jar</systemPath>
+            <version>LATEST</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
